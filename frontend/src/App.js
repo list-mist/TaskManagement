@@ -6,9 +6,13 @@ import { BrowserRouter as Router , Route, Routes } from 'react-router-dom';
 import {Box} from '@mui/material';
 import Categories from './pages/categories';
 import CategoryDetails from './pages/categories/CategoryDetails';
+import {SnackbarProvider} from "notistack"
 export function App() {
   return (
     <><CssBaseline />
+    <SnackbarProvider>
+
+    
     <Router>
       <Box >
         <Routes>
@@ -18,9 +22,16 @@ export function App() {
           <Route path="/categories/create"
           element = {<CategoryDetails/>}
          />
+         <Route path={`/categories/edit/:id`}
+          element = {<CategoryDetails/>}
+         />
+          <Route path={`/categories/delete/:id`}
+          element = {<CategoryDetails/>}
+         />
         </Routes>
       </Box>
     </Router>
+    </SnackbarProvider>
     </>
   );
 }
