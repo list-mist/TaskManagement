@@ -27,7 +27,7 @@ export default function CategoryDetails() {
       if(id){
           getResource(id)
       }
-  },[id])
+  },[id, getResource])
   useEffect(() =>{
     if(resource){
         setInitialValues({

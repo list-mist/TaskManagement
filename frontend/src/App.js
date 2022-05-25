@@ -7,6 +7,8 @@ import {Box} from '@mui/material';
 import Categories from './pages/categories';
 import CategoryDetails from './pages/categories/CategoryDetails';
 import {SnackbarProvider} from "notistack"
+import SignUp from './pages/auth/SignUp';
+
 export function App() {
   return (
     <><CssBaseline />
@@ -27,6 +29,9 @@ export function App() {
          />
           <Route path={`/categories/delete/:id`}
           element = {<CategoryDetails/>}
+         />
+          <Route path="/auth/signup" 
+          element = {<SignUp/>}
          />
         </Routes>
       </Box>

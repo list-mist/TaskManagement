@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from users.urls import urlpatterns as user_urlPatterns
 
+print(user_urlPatterns)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('todo.urls'))
 ]
+
+urlpatterns += user_urlPatterns

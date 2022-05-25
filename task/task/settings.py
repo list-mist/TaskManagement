@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,14 +33,21 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'todo',
     'users',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
+    'djoser'
 ]
 AUTH_USER_MODEL = 'users.account'
+
+DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "auth/password-reset/confirm/{uid}/{token}"
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,6 +57,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+}
 
 ROOT_URLCONF = 'task.urls'
 
@@ -81,7 +96,7 @@ DATABASES = {
         'PORT':3306,
         'NAME':'task_db', 
         'USER':'root',
-        'PASSWORD':'golumolu4',
+        'PASSWORD':os.environ.get('PASSWORD'),
     }
 }
 
