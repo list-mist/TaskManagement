@@ -2,6 +2,10 @@ import { useCallback, useState,useEffect } from "react";
 import axios from "axios"
 import { useSnackbar } from "notistack";
 import formatHttpApiError from "src/helpers/formatHttpApiError";
+import getCommonOptions from "src/helpers/axios/getCommonOptions";
+
+
+
 export default function useRequestResource({endpoint, resourceLabel}) {
    const [resourceList, setResourceList] = useState([])
   
@@ -20,16 +24,23 @@ export default function useRequestResource({endpoint, resourceLabel}) {
        setError(FormatError)
        enqueueSnackbar(FormatError);
    },[enqueueSnackbar,error])
+
    const getResourceList = useCallback(() =>{
-       const res = async() => {
-           const resp = await axios.get(`/api/${endpoint}/`)
+        axios.get(`/api/${endpoint}/`, getCommonOptions()).then((res) =>{
+         setResourceList(res.data)
+    }).catch(handleError)
+    /*    const res = async() => {
+           console.log(options)
+           const resp = await axios.get(`/api/${endpoint}/`,options)
+           console.log(resp.data)
            setResourceList(resp.data)
        }
-       res()
-},[endpoint]);
+       res() */
+},[endpoint,handleError]);
 
    const addResource = useCallback((data,successCallBack) =>{
-    axios.post(`/api/${endpoint}/`,data).then(() =>{
+
+    axios.post(`/api/${endpoint}/`,data,getCommonOptions()).then(() =>{
         enqueueSnackbar(`${resourceLabel} added`)
         if(successCallBack){
             successCallBack();
@@ -38,14 +49,14 @@ export default function useRequestResource({endpoint, resourceLabel}) {
    },[endpoint,enqueueSnackbar,resourceLabel,handleError]);
    
    const getResource = useCallback((id) =>{
-    axios.get(`/api/${endpoint}/${id}`).then((res) =>{
+    axios.get(`/api/${endpoint}/${id}`,getCommonOptions()).then((res) =>{
         const {data} = res
         setResource(data)
     }).catch(handleError)
    },[endpoint,handleError])
 
    const updateResource = useCallback((id,data,successCallBack)=>{
-    axios.patch(`/api/${endpoint}/${id}/`,data).then(() =>{
+    axios.patch(`/api/${endpoint}/${id}/`,data,getCommonOptions()).then(() =>{
         enqueueSnackbar(`${resourceLabel} Updated`)
         if(successCallBack){
             successCallBack();
@@ -53,7 +64,7 @@ export default function useRequestResource({endpoint, resourceLabel}) {
     }).catch(handleError)
    },[endpoint, enqueueSnackbar,resourceLabel,handleError])
    const deleteResource = useCallback((id)=>{
-    axios.delete(`/api/${endpoint}/${id}/`).then(() =>{
+    axios.delete(`/api/${endpoint}/${id}/`,getCommonOptions()).then(() =>{
         enqueueSnackbar(`${resourceLabel} deleted`)
         const newResourceList = resourceList.filter((r) => {
                 return r.id != id 

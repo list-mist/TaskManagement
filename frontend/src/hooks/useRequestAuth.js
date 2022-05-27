@@ -27,8 +27,24 @@ export default function useRequestAuth() {
          }).catch(handleError)
     },[enqueueSnackbar,handleError])
 
+    const login = useCallback(({username,password},successCallBack) =>{
+        axios.post("/api/auth/token/login",{
+            username,
+            password
+        }).then((res)=>{
+            const {auth_token} = res.data;
+            localStorage.setItem("authToken",auth_token);
+            
+            enqueueSnackbar("Logged in successfully.")
+            if(successCallBack){
+                successCallBack()
+            }
+        }).catch(handleError)
+   },[enqueueSnackbar,handleError])
+
     return {
         register,
+        login,
         error
     }
 }

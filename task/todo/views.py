@@ -13,7 +13,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return self.request.user.categories.all()
     
     def perform_create(self, serializer):
-        serializer.save(create_by = self.request.user)
+        serializer.save(created_by = self.request.user)
     
     
     

@@ -8,10 +8,14 @@ import Categories from './pages/categories';
 import CategoryDetails from './pages/categories/CategoryDetails';
 import {SnackbarProvider} from "notistack"
 import SignUp from './pages/auth/SignUp';
+import SignIn from './pages/auth/SignIn';
+import AuthContextProvider from './contexts/AuthContextProvider';
+
 
 export function App() {
   return (
     <><CssBaseline />
+    <AuthContextProvider>
     <SnackbarProvider>
 
     
@@ -33,10 +37,14 @@ export function App() {
           <Route path="/auth/signup" 
           element = {<SignUp/>}
          />
+          <Route path="/auth/signin" 
+          element = {<SignIn/>}   
+         />
         </Routes>
       </Box>
     </Router>
     </SnackbarProvider>
+    </AuthContextProvider>
     </>
   );
 }
