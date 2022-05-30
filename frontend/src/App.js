@@ -10,7 +10,8 @@ import {SnackbarProvider} from "notistack"
 import SignUp from './pages/auth/SignUp';
 import SignIn from './pages/auth/SignIn';
 import AuthContextProvider from './contexts/AuthContextProvider';
-
+import RequireAuth  from "./components/RequireAuth"
+import RequireNotAuth from   "./components/RequireNotAuth"
 
 export function App() {
   return (
@@ -22,6 +23,7 @@ export function App() {
     <Router>
       <Box >
         <Routes>
+          <Route element = {<RequireAuth/>} >
           <Route path="/categories"
           element = {<Categories/>}
          />
@@ -34,12 +36,25 @@ export function App() {
           <Route path={`/categories/delete/:id`}
           element = {<CategoryDetails/>}
          />
-          <Route path="/auth/signup" 
-          element = {<SignUp/>}
+
+        </Route>
+          {/* <Route path="/categories"
+          element = {<Categories/>}
          />
-          <Route path="/auth/signin" 
-          element = {<SignIn/>}   
+          <Route path="/categories/create"
+          element = {<CategoryDetails/>}
          />
+         <Route path={`/categories/edit/:id`}
+          element = {<CategoryDetails/>}
+         />
+          <Route path={`/categories/delete/:id`}
+          element = {<CategoryDetails/>}
+         /> */}
+         <Route element = {<RequireNotAuth/>}>
+            <Route path="/auth/signup" element = {<SignUp/>}/>
+            <Route path="/auth/signin" element = {<SignIn/>} />
+         </Route>
+         
         </Routes>
       </Box>
     </Router>

@@ -43,8 +43,8 @@ export default function AuthContextProvider({ children }) {
         if (!user && (isAuthenticated === null || isAuthenticated === true)) {
             loadAuthUser()
         }
-    }, [user, isAuthenticated])
-
+    }, [user, isAuthenticated]);
+    console.log(providerValue);
     return (
         <AuthContext.Provider value={providerValue}>
             {children}

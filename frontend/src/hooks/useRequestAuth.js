@@ -1,12 +1,13 @@
-import { useCallback, useState,useEffect } from "react";
+import { useCallback, useState,useEffect, useContext } from "react";
 import axios from "axios"
 import { useSnackbar } from "notistack";
 import formatHttpApiError from "src/helpers/formatHttpApiError";
+import {AuthContext} from "src/contexts/AuthContextProvider";
 
 export default function useRequestAuth() {
     const {enqueueSnackbar} = useSnackbar()
     const [error,setError] = useState([])
-   
+    const {setIsAuthenticated , user} = useContext(AuthContext)
     const handleError = useCallback((err)=>{
         const FormatError = formatHttpApiError(err)
         setError(FormatError)
@@ -34,13 +35,13 @@ export default function useRequestAuth() {
         }).then((res)=>{
             const {auth_token} = res.data;
             localStorage.setItem("authToken",auth_token);
-            
+            setIsAuthenticated(true)
             enqueueSnackbar("Logged in successfully.")
             if(successCallBack){
                 successCallBack()
             }
         }).catch(handleError)
-   },[enqueueSnackbar,handleError])
+   },[enqueueSnackbar,handleError,setIsAuthenticated])
 
     return {
         register,
