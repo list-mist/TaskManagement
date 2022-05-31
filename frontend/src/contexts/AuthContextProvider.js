@@ -44,7 +44,7 @@ export default function AuthContextProvider({ children }) {
             loadAuthUser()
         }
     }, [user, isAuthenticated]);
-    console.log(providerValue);
+   
     return (
         <AuthContext.Provider value={providerValue}>
             {children}

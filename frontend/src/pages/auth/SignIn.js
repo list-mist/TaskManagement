@@ -22,9 +22,7 @@ export default function SignIn() {
     const { login } = useRequestAuth();
     const navigate = useNavigate()
     const handleSubmit = (values) => {
-        login(values, () =>{
-            navigate("/categories")
-        })
+        login(values)
     };
 
     return (

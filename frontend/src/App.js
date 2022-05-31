@@ -12,6 +12,8 @@ import SignIn from './pages/auth/SignIn';
 import AuthContextProvider from './contexts/AuthContextProvider';
 import RequireAuth  from "./components/RequireAuth"
 import RequireNotAuth from   "./components/RequireNotAuth"
+import BaseLayout from './components/BaseLayout';
+
 
 export function App() {
   return (
@@ -24,6 +26,7 @@ export function App() {
       <Box >
         <Routes>
           <Route element = {<RequireAuth/>} >
+          <Route element={<BaseLayout />}>
           <Route path="/categories"
           element = {<Categories/>}
          />
@@ -36,7 +39,7 @@ export function App() {
           <Route path={`/categories/delete/:id`}
           element = {<CategoryDetails/>}
          />
-
+        </Route>
         </Route>
           {/* <Route path="/categories"
           element = {<Categories/>}
